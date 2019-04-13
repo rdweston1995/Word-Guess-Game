@@ -1,94 +1,108 @@
 //Array of possible choices for the random word
 var words = ["Rainier", "Baker", "Adams", "Saint Helens", "Glacier", "Hood", "Three Sisters", "Denali", "Everest", "Lhotse"];
 
-//
+//Variables for wins and loses
+var wins = 0, loses = 0, guessesLeft = 10;
+
+var guesses = [];
+
+//Getting the random word from the array above and saving it to the console for testing
 var currentWord = ranWord();
-console.log(currentWord);
+//console.log(currentWord);
 
 //Getting the hint for the current Word
 getHint(currentWord);
+currentWins();
+currentGuessesLeft();
+addToGuesses();
 
-var reveal = [];
-for(i = 0; i < currentWord.length; i++){
-    //document.write("_ ");
-    if(currentWord[i] === " "){
-        reveal.push("&nbsp&nbsp");
-    }else{
-        reveal.push("_ ");
-    }
-    //reveal.push("_ ");
-}
-//document.write(reveal);
-var str = "";
-for(i = 0; i < reveal.length; i++){
-    //document.write(reveal[i]);
-    str += reveal[i];
-    //console.log(str);
-}
-
-console.log(str);
-//document.write(str);
-//document.getElementById("theWord").innerHTML = "fuck you";
-
-//document.getElementById("word").innerHTML = str;
-
-//document.write(currentWord + "<br>");
-//var STRI = document.createElement("div");
-//rewrite(str);
-temp(currentWord);
-//WORKING DO NOT DELETE
-//var STR = document.createElement("div");
-//STR.innerHTML = str;
-//document.body.appendChild(STR);
-
-//var STR = document.getElementById("theWord");
-//STR.innerHTML = str;
-//document.body.appendChild()
-//document.getElementById("theWord").innerHTML = str;
-
-
-
-//document.write(str);
+//Setting the initial underscores
+var u = under(currentWord);
+rewrite(u);
 
 //On keypress event to record what key was pressed
 document.onkeypress = function(event){
     var usr = event.which;
-    console.log(usr);
+    //console.log(usr);
     usr = String.fromCharCode(usr);
-    console.log(usr);
+    //console.log(usr);
     //userCheck(usr, currentWord, reveal)
-    userCheck(usr, currentWord, str);
+    userCheck(usr, currentWord, u);
 }
 
 //Function to write the underscores initially and then replace with the letters guessed
-function rewrite(str){
-    document.getElementById("theWord").innerHTML = str;
-}
+function rewrite(currentWord){
+    //document.getElementById("theWord").innerHTML = str;
+    var word = "";
+    for(var i = 0; i < currentWord.length; i++){
 
-//I'm not sure what this does right now
-function temp(currentWord){
-    stri = "";
-
-    for (i = 0; i < currentWord.length; i++){
-        stri += currentWord.charAt(i) + " ";
+        word += currentWord.charAt(i) + "&nbsp";
     }
-    console.log(stri);
-    document.write("<br>");
+    //console.log(word);
+    document.getElementById("theWord").innerHTML = word;
+    //console.log(currentWord);
+
+    //Checking if the game is won
+    if(currentWord === this.currentWord){
+        this.wins++;
+        //console.log(wins);
+        currentWins();
+    }
 }
 
+//Setting the underscores of the unguessed word
+function under(currentWord){
+    var word = "";
+    for (var i = 0; i < currentWord.length; i++){
+        word += "_";
+    }
+    console.log(word);
+    return word;
+}
+
+// array join
+var test  = u;
+var CW = makeArray(currentWord);
+var newU = makeArray(u);
 
 //Function to check if the user guess is any of the letters that are in the word
-function userCheck(userGuess, currentWord, reveal){
-    //For loop to run through the random word to check if the guessed letter appears in the word
-    for(i = 0; i < currentWord.length; i++){
-        if(userGuess === currentWord.charAt(i).toLowerCase()){
-            reveal[i] = currentWord.charAt(i);
-            //reveal.charAt(i) = currentWord.charAt(i);
-            //str = reveal;
-
-            rewrite(reveal);
+function userCheck(userGuess, currentWord, u){
+    //console.log(CW);
+    //console.log(newU);
+    var inWord = false;
+    for(var i = 0; i < currentWord.length; i++){
+        if(userGuess == CW[i]){
+            newU[i] = CW[i];
+            test = arrStr(newU);
+            inWord = true;
+            //console.log(newU);  
+            rewrite(test);
         }
     }
+    if(inWord === false){
+        guesses.push(userGuess);
+        guessesLeft--;
+        currentGuessesLeft();
+        addToGuesses();
+    }
+}
+
+//Makes a string into an array
+function makeArray(arr){
+    var newArray = [];
+    for(var i = 0; i < arr.length; i++){
+        newArray.push(arr.charAt(i));
+    }
+    return newArray;
+}
+
+//Changes the array back into a string
+function arrStr(arr){
+    var word = "";
+    for(var i = 0; i < arr.length; i++){
+        word += arr[i];
+    }
+    return word;
 }
 
 //Fucntion to get the random word that will be guessed
@@ -101,7 +115,7 @@ function ranWord(){
 function getHint(currentWord){
     if(currentWord === "Rainier"){
         rainierHint();
-    }else if(currentWord === "Staint Helens"){
+    }else if(currentWord === "Saint Helens"){
         stHelenHint();
     }else if(currentWord === "Adams"){
         adamsHint();
@@ -182,10 +196,27 @@ function lhotseHint(){
     document.getElementById("hints").innerHTML = hint;
 }
 
+//DISPLAYING THE WINS LOSES AND THE LETTERS GUESSED FOR THE GAME
+function currentWins(){
+    document.getElementById("wins").innerHTML = "Wins: " + wins;
+}
 
+function currentLoses(){
+    document.getElementById("loses").innerHTML = "Loses: " + loses;
+}
 
+function currentGuessesLeft(){
+    document.getElementById("guessesRemaining").innerHTML = "Guesses Left: " + guessesLeft;
+}
 
-//Add hints to each mountain
+function addToGuesses(){
+    var newGuesses = [];
+    for(var i = 0; i < guesses.length; i++){
+        newGuesses[i] = guesses[i] + " ";
+    }
+    //guesses.push(usr);
+    document.getElementById("lettersGuessed").innerHTML = "Letters Guessed: " + newGuesses;
+}
 //Show a picture of the Mountain when guessed correctly
 //Show on a map where the Mountain is located
 //Add more mountains

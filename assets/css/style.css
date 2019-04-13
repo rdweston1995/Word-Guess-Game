@@ -14,3 +14,11 @@ h2{
 #hints{
     text-align:left;
 }
+
+#theWord{
+    font-size: 25px;
+}
+
+#lettersGuessed{
+    text-align:left;
+}
