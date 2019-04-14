@@ -2,6 +2,7 @@ h1{
     font-size: 100px;
     font-weight: bold;
     text-align: center;
+    margin-bottom: 50px;
 }
 div{
     text-align: center;
@@ -16,9 +17,46 @@ h2{
 }
 
 #theWord{
-    font-size: 25px;
+    font-size: 50px;
+    overflow: visible;
 }
 
-#lettersGuessed{
+#lettersGuessed, #wins, #guessesRemaining, #loses{
     text-align:left;
 }
+
+.resetBtn{
+    float:left;
+    width:200px;
+    margin-top: 25px;
+    background-color: green;
+    border-color: darkgreen;
+}
+
+.wordGuess{
+    margin-right: 50px;
+}
+
+#hintsTitle, #statsTitle, #resetTitle{
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 45px;
+    text-align:left;
+    margin-bottom: 25px;
+}
+
+#resetTitle{
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#oldimg, #mtnLocation{
+    width:700px;
+    height:500px;
+    margin-top: 50px;
+    
+}
+
+
+
+

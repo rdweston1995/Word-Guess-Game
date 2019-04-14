@@ -21,23 +21,36 @@
     <!--<h1 id="word">Hangman</h1> -->
     <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-3" id="hints">
-
+        <div class="col-md-3">
+            <h2 id="hintsTitle">Hints</h2>
+            <div id="hints"></div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 wordGuess">
             <!--<h2 id="theWord"></h2> -->
             <pre type="text" id="theWord"></pre>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <h2 id="statsTitle">Stats</h2>
             <div id="wins"></div>
-            <div id="guessesRemaining"></div>
             <div id="loses"></div>
+            <div id="guessesRemaining"></div>   
             <div id="lettersGuessed"></div>
+            <h2 id="resetTitle">New Word</h2>
+            <button type="button" class="btn btn-primary resetBtn" onclick="reset()">New Word</button>
         </div>    
     </div>
     <div class="row">
-        <div id="pic"></div>
-        <div id="location"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4" id="pic">
+            <!--<img src="assets/images/Rainier.jpg" alt="Mount Rainier" heigh="400px" width="400px">-->
+            <img id="oldimg" alt="Guess the Word to Reveal the Picture of the Mountain">
+            
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4" id="location">
+            <img id="mtnLocation" alt="Guess the Word to Reveal the Map">
+        </div>
     </div>
 </body>
 <script type="text/javascript" src="assets/javascript/game.js"></script>

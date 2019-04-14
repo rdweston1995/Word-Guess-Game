@@ -6,15 +6,17 @@ var wins = 0, loses = 0, guessesLeft = 10;
 
 var guesses = [];
 
+var clicked = false;
+
 //Getting the random word from the array above and saving it to the console for testing
 var currentWord = ranWord();
 //console.log(currentWord);
 
 //Getting the hint for the current Word
 getHint(currentWord);
-currentWins();
-currentGuessesLeft();
-addToGuesses();
+
+//Setting up the Wins/Loses/Guesses
+update();
 
 //Setting the initial underscores
 var u = under(currentWord);
@@ -26,13 +28,16 @@ document.onkeypress = function(event){
     //console.log(usr);
     usr = String.fromCharCode(usr);
     //console.log(usr);
-    //userCheck(usr, currentWord, reveal)
     userCheck(usr, currentWord, u);
 }
 
+
+
+
+
 //Function to write the underscores initially and then replace with the letters guessed
 function rewrite(currentWord){
-    //document.getElementById("theWord").innerHTML = str;
+
     var word = "";
     for(var i = 0; i < currentWord.length; i++){
 
@@ -44,9 +49,10 @@ function rewrite(currentWord){
 
     //Checking if the game is won
     if(currentWord === this.currentWord){
-        this.wins++;
-        //console.log(wins);
-        currentWins();
+        wins++;
+        update();
+
+        revealImage(currentWord);
     }
 }
 
@@ -60,13 +66,14 @@ function under(currentWord){
     return word;
 }
 
-// array join
+
 var test  = u;
 var CW = makeArray(currentWord);
 var newU = makeArray(u);
 
 //Function to check if the user guess is any of the letters that are in the word
 function userCheck(userGuess, currentWord, u){
+    update();
     //console.log(CW);
     //console.log(newU);
     var inWord = false;
@@ -75,15 +82,22 @@ function userCheck(userGuess, currentWord, u){
             newU[i] = CW[i];
             test = arrStr(newU);
             inWord = true;
+            guesses.push(userGuess);
+            update();
             //console.log(newU);  
             rewrite(test);
         }
+        
     }
+    
     if(inWord === false){
         guesses.push(userGuess);
         guessesLeft--;
-        currentGuessesLeft();
-        addToGuesses();
+        if(guessesLeft === 0){
+            loses++;
+
+        }      
+        update();
     }
 }
 
@@ -217,6 +231,171 @@ function addToGuesses(){
     //guesses.push(usr);
     document.getElementById("lettersGuessed").innerHTML = "Letters Guessed: " + newGuesses;
 }
-//Show a picture of the Mountain when guessed correctly
-//Show on a map where the Mountain is located
+
+function update(){
+    currentWins();
+    currentLoses();
+    currentGuessesLeft();
+    addToGuesses();
+}
+
+//Function to pause the game on a loss or win and wait for the button to be pressed to continue the game
+function resetGame(){
+    guesses = [];
+    guessesLeft = 10;
+    currentWord = ranWord();
+    getHint(currentWord);
+    u = under(currentWord);
+    rewrite(u);
+    test = u;
+    CW = makeArray(currentWord);
+    newU = makeArray(u);
+    console.log(currentWord);
+}
+
+function reset(){ 
+    
+    resetGame();
+    update();
+    removeImage();
+    
+}
+
+
+//Showing images
+function revealImage(currentWord){
+    if(currentWord === "Rainier"){
+        rainierImage();
+    }else if(currentWord === "Saint Helens"){
+        stHelenImage();
+    }else if(currentWord === "Adams"){
+        adamIamge();
+    }else if(currentWord === "Glacier"){
+        glacierImage();
+    }else if(currentWord === "Baker"){
+        bakerImage();
+    }else if(currentWord === "Hood"){
+        hoodImage();
+    }else if(currentWord === "Three Sisters"){
+        tsImage();
+    }else if(currentWord === "Lhotse"){
+        lhotseImage();
+    }else if(currentWord === "Everest"){
+        everestImage();
+    }else if(currentWord === "Denali"){
+        denaliImage();
+    }
+}
+
+function removeImage(){
+    document.getElementById("oldimg").removeAttribute("src");
+    
+
+    document.getElementById("mtnLocation").removeAttribute("src");
+    
+}
+
+function rainierImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Rainier.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/RainierMap.jpg";  
+    document.getElementById("location").appendChild(map);
+}
+
+function stHelenImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/StHelens.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/StHelensMap.jpg";
+    document.getElementById("location").appendChild(map);
+    
+}
+
+function adamIamge(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Adams.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/AdamsMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+function glacierImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Glacier.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/GlacierMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+function bakerImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Baker.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/BakerMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+function hoodImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Hood.jpb";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/HoodMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+function tsImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/ThreeSisters.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/HoodMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+function lhotseImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Lhotse.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/LhotseMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+function everestImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Everest.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/EverestMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+function denaliImage(){
+    var img = document.getElementById("oldimg");
+    img.src = "assets/images/Denali.jpg";
+    document.getElementById("pic").appendChild(img);
+
+    var map = document.getElementById("mtnLocation");
+    map.src = "assets/images/DenaliMap.jpg";
+    document.getElementById("location").appendChild(map);
+}
+
+
+//Better picture of Everest
 //Add more mountains
