@@ -40,8 +40,12 @@ function rewrite(currentWord){
 
     var word = "";
     for(var i = 0; i < currentWord.length; i++){
+        if(currentWord.charAt(i) === " "){
+            word += "&nbsp" + "&nbsp";
+        }else{
+            word += currentWord.charAt(i) + "&nbsp";
 
-        word += currentWord.charAt(i) + "&nbsp";
+        }
     }
     //console.log(word);
     document.getElementById("theWord").innerHTML = word;
@@ -60,7 +64,12 @@ function rewrite(currentWord){
 function under(currentWord){
     var word = "";
     for (var i = 0; i < currentWord.length; i++){
-        word += "_";
+        if(currentWord[i] === " "){
+            word += " ";
+        }else{
+            word += "_";
+
+        }
     }
     console.log(word);
     return word;
@@ -78,7 +87,7 @@ function userCheck(userGuess, currentWord, u){
     //console.log(newU);
     var inWord = false;
     for(var i = 0; i < currentWord.length; i++){
-        if(userGuess == CW[i]){
+        if(userGuess == CW[i].toLowerCase() || userGuess == CW[i]){
             newU[i] = CW[i];
             test = arrStr(newU);
             inWord = true;
@@ -348,7 +357,7 @@ function bakerImage(){
 
 function hoodImage(){
     var img = document.getElementById("oldimg");
-    img.src = "assets/images/Hood.jpb";
+    img.src = "assets/images/Hood.jpg";
     document.getElementById("pic").appendChild(img);
 
     var map = document.getElementById("mtnLocation");
